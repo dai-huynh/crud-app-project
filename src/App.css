@@ -1,10 +1,41 @@
+* {
+  font-family: "garamond", serif;
+  text-decoration: none;
+}
+
+h1 {
+  color: #5b3920;
+}
+
+h2,
+h4 {
+  color: #6c2e2e;
+}
+
+p {
+  color: #3e2723;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+}
+
+.card {
+  border: 2px solid #6c2e2e;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px auto;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: #f5f5f5;
+}
+
 .App {
-  background-color: beige;
+  background-color: #ede6d6;
   min-height: 100vh;
   text-align: center;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
