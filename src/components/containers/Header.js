@@ -37,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
     margin: "auto",
   },
-  links: {
-    textDecoration: "none",
-  },
 }));
 
 // Header component, displayed on every page
@@ -53,7 +50,6 @@ const Header = () => {
           <Typography variant="h6" className={classes.title} color="inherit">
             Campus Management System
           </Typography>
-
           <Link className={classes.links} to={"/"}>
             <Button variant="contained" style={{ marginRight: "10px" }}>
               Home
