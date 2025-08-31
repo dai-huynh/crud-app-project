@@ -18,7 +18,7 @@ const StudentView = (props) => {
       <Link to={`/campus/${student.campus.id}`}>
         <h2>Campus: {student.campus.name}</h2>
       </Link>
-      <h4>Student ID: {student.id}</h4>
+      <h4>Student ID: {student.campusId}</h4>
     </div>
   );
 };

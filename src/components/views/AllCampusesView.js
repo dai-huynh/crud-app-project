@@ -18,7 +18,7 @@ const AllCampusesView = (props) => {
   return (
     <div>
       <h1>All Campuses</h1>
-      <div class="card-container">
+      <div className="card-container">
         {props.allCampuses.map((campus) => (
           <div key={campus.id} className="card">
             <Link to={`/campus/${campus.id}`}>
@@ -31,11 +31,9 @@ const AllCampusesView = (props) => {
         ))}
       </div>
 
-      <Link to={`/`}>
+      <Link to={`/newcampus`}>
         <Button variant="contained">Add New Campus</Button>
       </Link>
-      <br />
-      <br />
     </div>
   );
 };

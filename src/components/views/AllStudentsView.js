@@ -15,7 +15,7 @@ const AllStudentsView = (props) => {
       <div>
         <p>There are no students.</p>
         <Link to={`newstudent`}>
-          <button>Add New Student</button>
+          <Button>Add New Student</Button>
         </Link>
       </div>
     );
@@ -26,7 +26,7 @@ const AllStudentsView = (props) => {
     <div>
       <h1>All Students</h1>
 
-      <div class="card-container">
+      <div className="card-container">
         {students.map((student) => {
           let name = student.firstname + " " + student.lastname;
           return (
