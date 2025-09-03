@@ -28,6 +28,7 @@ export const addCampusThunk = (campus) => async (dispatch) => {
   try {
     // API "post" call to add "campus" object's data to database
     let res = await axios.post(`/api/campuses`, campus);
+    console.log("Added campus: ", campus);
     // Call Action Creator to return Action object (type + payload with new campuses data)
     // Then dispatch the Action object to Reducer to update state
     dispatch(ac.addCampus(res.data));
@@ -42,6 +43,18 @@ export const addCampusThunk = (campus) => async (dispatch) => {
 export const deleteCampusThunk = (campusId) => async (dispatch) => {
   // The THUNK
   try {
+    let res = await axios.get(`/api/campuses/${campusId}`);
+    let students = res.data.students;
+    console.log("Students to unassign: ", students);
+    // If there are students assigned to this campus, we need to unassign them first
+    if (students && students.length > 0) {
+      await Promise.all(
+        students.map((student) =>
+          axios.put(`/api/students/${student.id}`, { campusId: null })
+        )
+      );
+    }
+
     // API "delete" call to delete student (based on "campusID") from database
     await axios.delete(`/api/campuses/${campusId}`);
     // Delete successful so change state with dispatch
@@ -56,10 +69,12 @@ export const deleteCampusThunk = (campusId) => async (dispatch) => {
 export const editCampusThunk = (campus) => async (dispatch) => {
   // The THUNK
   try {
+    console.log("Editing campus: ", campus);
     // API "put" call to update student (based on "id" and "campus" object's data) from database
-    let updatedCampus = await axios.put(`/api/campuses/${campus.id}`, campus);
+    let res = await axios.put(`/api/campuses/${campus.id}`, campus);
     // Update successful so change state with dispatch
-    dispatch(ac.editStudent(updatedCampus));
+    dispatch(ac.editCampus(res.data));
+    return res.data;
   } catch (err) {
     console.error(err);
   }

@@ -32,14 +32,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NewCampusView = (props) => {
-  const { handleChange, handleSubmit } = props;
+const EditCampusView = (props) => {
+  const { handleChange, handleSubmit, campus } = props;
   const classes = useStyles();
 
   // Render a New Campus view with an input form
   return (
     <div>
-      <h1>New Campus</h1>
+      <h1>Editing Campus</h1>
 
       <div className={classes.root}>
         <div className={classes.formContainer}>
@@ -52,7 +52,7 @@ const NewCampusView = (props) => {
                 color: "#11153e",
               }}
             >
-              Add a Campus
+              {campus.name}
             </Typography>
           </div>
           <form
@@ -65,6 +65,7 @@ const NewCampusView = (props) => {
             <input
               type="text"
               name="name"
+              value={campus.name || ""}
               onChange={(e) => handleChange(e)}
               required
             />
@@ -77,6 +78,7 @@ const NewCampusView = (props) => {
             <input
               type="text"
               name="address"
+              value={campus.address || ""}
               onChange={(e) => handleChange(e)}
               required
             />
@@ -89,6 +91,7 @@ const NewCampusView = (props) => {
             <input
               type="text"
               name="description"
+              value={campus.description || ""}
               onChange={(e) => handleChange(e)}
             />
             <br />
@@ -100,6 +103,7 @@ const NewCampusView = (props) => {
             <input
               type="text"
               name="imageUrl"
+              value={campus.imageUrl || ""}
               onChange={(e) => handleChange(e)}
             />
             <br />
@@ -108,7 +112,7 @@ const NewCampusView = (props) => {
             <Button variant="contained" type="submit">
               Submit
             </Button>
-            <Link to={`/campuses`}>
+            <Link to={`/campus/${campus.campusId}`}>
               <Button variant="contained">Cancel</Button>
             </Link>
             <br />
@@ -120,4 +124,4 @@ const NewCampusView = (props) => {
   );
 };
 
-export default NewCampusView;
+export default EditCampusView;
