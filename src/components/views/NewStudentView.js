@@ -7,6 +7,7 @@ It constructs a React component to display the new student page.
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 
 // Create styling for the input form
 const useStyles = makeStyles(() => ({
@@ -32,7 +33,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 const NewStudentView = (props) => {
-  const { handleChange, handleSubmit } = props;
+  const {
+    handleChange,
+    handleSubmit,
+    errors,
+    firstname,
+    lastname,
+    email,
+    gpa,
+    campusId,
+    imageUrl,
+  } = props;
   const classes = useStyles();
 
   // Render a New Student view with an input form
@@ -54,48 +65,107 @@ const NewStudentView = (props) => {
               Add a Student
             </Typography>
           </div>
-          <form
-            style={{ textAlign: "center" }}
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <form style={{ textAlign: "center" }} onSubmit={handleSubmit}>
+            {/* First Name */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               First Name:{" "}
             </label>
             <input
               type="text"
               name="firstname"
-              onChange={(e) => handleChange(e)}
-              required
+              value={firstname}
+              onChange={handleChange}
             />
+            {errors?.firstname && (
+              <p style={{ color: "red" }}>{errors.firstname}</p>
+            )}
             <br />
             <br />
 
+            {/* Last Name */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Last Name:{" "}
             </label>
             <input
               type="text"
               name="lastname"
-              onChange={(e) => handleChange(e)}
-              required
+              value={lastname}
+              onChange={handleChange}
             />
+            {errors?.lastname && (
+              <p style={{ color: "red" }}>{errors.lastname}</p>
+            )}
             <br />
             <br />
 
+            {/* Email */}
+            <label style={{ color: "#11153e", fontWeight: "bold" }}>
+              Email:{" "}
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+            />
+            {errors?.email && <p style={{ color: "red" }}>{errors.email}</p>}
+            <br />
+            <br />
+
+            {/* GPA */}
+            <label style={{ color: "#11153e", fontWeight: "bold" }}>
+              GPA:{" "}
+            </label>
+            <input
+              type="number"
+              step="0.1"
+              name="gpa"
+              value={gpa}
+              onChange={handleChange}
+            />
+            {errors?.gpa && <p style={{ color: "red" }}>{errors.gpa}</p>}
+            <br />
+            <br />
+
+            {/* Campus ID */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Id:{" "}
             </label>
             <input
               type="text"
               name="campusId"
-              onChange={(e) => handleChange(e)}
+              value={campusId}
+              onChange={handleChange}
             />
+            {errors?.campusId && (
+              <p style={{ color: "red" }}>{errors.campusId}</p>
+            )}
             <br />
             <br />
 
+            {/* Student Image URL */}
+            <label style={{ color: "#11153e", fontWeight: "bold" }}>
+              Student Image URL:{" "}
+            </label>
+            <input
+              type="text"
+              name="imageUrl"
+              value={imageUrl}
+              onChange={handleChange}
+            />
+            {errors?.imageUrl && (
+              <p style={{ color: "red" }}>{errors.imageUrl}</p>
+            )}
+            <br />
+            <br />
+
+            {/* Buttons */}
             <Button variant="contained" type="submit">
               Submit
             </Button>
+            <Link to={`/students`}>
+              <Button variant="contained">Cancel</Button>
+            </Link>
             <br />
             <br />
           </form>

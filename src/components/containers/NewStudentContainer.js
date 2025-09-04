@@ -20,16 +20,53 @@ class NewStudentContainer extends Component {
     this.state = {
       firstname: "",
       lastname: "",
+      email: "",
       campusId: null,
+      gpa: "",
+      imageUrl: "",
       redirect: false,
       redirectId: null,
     };
   }
 
+  validateStudent = (student) => {
+    const errors = {};
+
+    if (!student.firstname || student.firstname.trim().length < 2) {
+      errors.firstname = "First name is required (min 2 characters).";
+    }
+
+    if (!student.lastname || student.lastname.trim().length < 2) {
+      errors.lastname = "Last name is required (min 2 characters).";
+    }
+    if (!student.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(student.email)) {
+      errors.email = "A valid email address is required.";
+    }
+
+    if (
+      student.gpa &&
+      (isNaN(student.gpa) || student.gpa < 0 || student.gpa > 4)
+    ) {
+      errors.gpa = "GPA must be a number between 0.0 and 4.0.";
+    }
+
+    if (student.imageUrl) {
+      try {
+        new URL(student.imageUrl);
+      } catch {
+        errors.imageUrl = "Image URL must be a valid URL.";
+      }
+    }
+
+    return errors;
+  };
+
   // Capture input data when it is entered
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
+    const { name, value } = event.target;
+    this.setState({ [name]: value }, () => {
+      const errors = this.validateStudent(this.state);
+      this.setState({ errors });
     });
   };
 
@@ -40,8 +77,18 @@ class NewStudentContainer extends Component {
     let student = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
+      email: this.state.email,
+      gpa: this.state.gpa,
       campusId: this.state.campusId,
+      imageUrl: this.state.imageUrl,
     };
+
+    const errors = this.validateStudent(student);
+
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors });
+      return;
+    }
 
     // Add new student in back-end database
     let newStudent = await this.props.addStudent(student);
@@ -50,9 +97,13 @@ class NewStudentContainer extends Component {
     this.setState({
       firstname: "",
       lastname: "",
+      email: "",
+      gpa: "",
       campusId: null,
+      imageUrl: "",
       redirect: true,
       redirectId: newStudent.id,
+      errors: {},
     });
   };
 
@@ -75,6 +126,13 @@ class NewStudentContainer extends Component {
         <NewStudentView
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          errors={this.state.errors}
+          firstname={this.state.firstname}
+          lastname={this.state.lastname}
+          email={this.state.email}
+          gpa={this.state.gpa}
+          campusId={this.state.campusId}
+          imageUrl={this.state.imageUrl}
         />
       </div>
     );
