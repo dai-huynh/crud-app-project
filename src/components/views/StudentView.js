@@ -8,17 +8,20 @@ It constructs a React component to display the single student view page.
 ================================================== */
 const StudentView = (props) => {
   const { student } = props;
-  console.log(student);
+  console.log("StudentView props:", student);
 
   // Render a single Student view
   return (
     <div>
       <h1>{student.firstname + " " + student.lastname}</h1>
 
-      <Link to={`/campus/${student.campus.id}`}>
-        <h2>Campus: {student.campus.name}</h2>
-      </Link>
-      <h4>Student ID: {student.id}</h4>
+      {!student.campusId ? (
+        <h2>This student is not enrolled in any campus</h2>
+      ) : (
+        <Link to={`/campus/${student.campusId}`}>
+          <h2>Campus: {student.campus.name}</h2>
+        </Link>
+      )}
     </div>
   );
 };

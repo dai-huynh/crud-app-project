@@ -15,7 +15,7 @@ const AllStudentsView = (props) => {
       <div>
         <p>There are no students.</p>
         <Link to={`newstudent`}>
-          <button>Add New Student</button>
+          <Button>Add New Student</Button>
         </Link>
       </div>
     );
@@ -25,20 +25,26 @@ const AllStudentsView = (props) => {
   return (
     <div>
       <h1>All Students</h1>
+      {!students.length ? (
+        <p>There are no students.</p>
+      ) : (
+        <div className="card-container">
+          {students.map((student) => {
+            let name = student.firstname + " " + student.lastname;
+            return (
+              <div key={student.id} className="card">
+                <Link to={`/student/${student.id}`}>
+                  <h2>{name}</h2>
+                </Link>
+                <Button onClick={() => deleteStudent(student.id)}>
+                  Delete
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
-      <div class="card-container">
-        {students.map((student) => {
-          let name = student.firstname + " " + student.lastname;
-          return (
-            <div key={student.id} className="card">
-              <Link to={`/student/${student.id}`}>
-                <h2>{name}</h2>
-              </Link>
-              <Button onClick={() => deleteStudent(student.id)}>Delete</Button>
-            </div>
-          );
-        })}
-      </div>
       <Link to={`/newstudent`}>
         <Button variant="contained">Add New Student</Button>
       </Link>
