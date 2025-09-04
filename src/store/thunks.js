@@ -169,3 +169,26 @@ export const fetchStudentThunk = (id) => async (dispatch) => {
     console.error(err);
   }
 };
+
+// Assign existing student to a campus
+export const assignStudentToCampusThunk =
+  (studentId, campusId) => async (dispatch) => {
+    try {
+      const res = await axios.put(`/api/students/${studentId}`, { campusId });
+
+      dispatch(ac.editStudent(res.data));
+      return res.data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+// thunks.js
+export const fetchUnassignedStudentsThunk = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/api/students/unassigned");
+    dispatch(ac.fetchUnassignedStudents(res.data));
+  } catch (err) {
+    console.error(err);
+  }
+};

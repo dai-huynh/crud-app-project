@@ -27,6 +27,7 @@ const CampusView = (props) => {
 
       <p>{campus.address}</p>
       <p>{campus.description}</p>
+      <p>Campus ID: {campus.id}</p>
       <h2>Students</h2>
 
       {!campus.students.length ? (
@@ -57,6 +58,9 @@ const CampusView = (props) => {
         </Link>
         <Link to={`/newstudent`}>
           <Button variant="contained">Add New Student</Button>
+        </Link>
+        <Link to={`/assignstudent/${campus.id}`}>
+          <Button variant="contained">Assign Existing Student</Button>
         </Link>
       </div>
     </div>
