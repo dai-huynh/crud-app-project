@@ -78,3 +78,13 @@ export const fetchStudent = (student) => {
     payload: student,
   };
 };
+
+export const assignStudentToCampus = (student) => ({
+  type: at.ASSIGN_STUDENT_TO_CAMPUS,
+  payload: student,
+});
+
+export const fetchUnassignedStudents = (students) => ({
+  type: at.FETCH_UNASSIGNED_STUDENTS,
+  payload: students,
+});
