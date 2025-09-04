@@ -33,10 +33,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 const NewCampusView = (props) => {
-  const { handleChange, handleSubmit } = props;
+  const {
+    handleChange,
+    handleSubmit,
+    errors,
+    name,
+    address,
+    description,
+    imageUrl,
+  } = props;
   const classes = useStyles();
 
-  // Render a New Campus view with an input form
   return (
     <div>
       <h1>New Campus</h1>
@@ -55,56 +62,71 @@ const NewCampusView = (props) => {
               Add a Campus
             </Typography>
           </div>
-          <form
-            style={{ textAlign: "center" }}
-            onSubmit={(e) => handleSubmit(e)}
-          >
+
+          <form style={{ textAlign: "center" }} onSubmit={handleSubmit}>
+            {/* Campus Name */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Name:{" "}
             </label>
             <input
               type="text"
               name="name"
-              onChange={(e) => handleChange(e)}
-              required
+              value={name}
+              onChange={handleChange}
             />
+            {errors?.name && <p style={{ color: "red" }}>{errors.name}</p>}
             <br />
             <br />
 
+            {/* Campus Address */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Address:{" "}
             </label>
             <input
               type="text"
               name="address"
-              onChange={(e) => handleChange(e)}
-              required
+              value={address}
+              onChange={handleChange}
             />
+            {errors?.address && (
+              <p style={{ color: "red" }}>{errors.address}</p>
+            )}
             <br />
             <br />
 
+            {/* Campus Description */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Description:{" "}
             </label>
             <input
               type="text"
               name="description"
-              onChange={(e) => handleChange(e)}
+              value={description}
+              onChange={handleChange}
             />
+            {errors?.description && (
+              <p style={{ color: "red" }}>{errors.description}</p>
+            )}
             <br />
             <br />
 
+            {/* Campus Image URL */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Image URL:{" "}
             </label>
             <input
               type="text"
               name="imageUrl"
-              onChange={(e) => handleChange(e)}
+              value={imageUrl}
+              onChange={handleChange}
             />
+            {errors?.imageUrl && (
+              <p style={{ color: "red" }}>{errors.imageUrl}</p>
+            )}
             <br />
             <br />
 
+            {/* Buttons */}
             <Button variant="contained" type="submit">
               Submit
             </Button>
@@ -119,5 +141,4 @@ const NewCampusView = (props) => {
     </div>
   );
 };
-
 export default NewCampusView;

@@ -1,15 +1,8 @@
-/*==================================================
-NewCampusView.js
-
-The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display the new Campus page.
-================================================== */
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 
-// Create styling for the input form
 const useStyles = makeStyles(() => ({
   formContainer: {
     width: "500px",
@@ -33,10 +26,9 @@ const useStyles = makeStyles(() => ({
 }));
 
 const EditCampusView = (props) => {
-  const { handleChange, handleSubmit, campus } = props;
+  const { handleChange, handleSubmit, campus, errors } = props;
   const classes = useStyles();
 
-  // Render a New Campus view with an input form
   return (
     <div>
       <h1>Editing Campus</h1>
@@ -52,13 +44,12 @@ const EditCampusView = (props) => {
                 color: "#11153e",
               }}
             >
-              {campus.name}
+              {campus.name || "Edit Campus"}
             </Typography>
           </div>
-          <form
-            style={{ textAlign: "center" }}
-            onSubmit={(e) => handleSubmit(e)}
-          >
+
+          <form style={{ textAlign: "center" }} onSubmit={handleSubmit}>
+            {/* Campus Name */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Name:{" "}
             </label>
@@ -66,12 +57,13 @@ const EditCampusView = (props) => {
               type="text"
               name="name"
               value={campus.name || ""}
-              onChange={(e) => handleChange(e)}
-              required
+              onChange={handleChange}
             />
+            {errors?.name && <p style={{ color: "red" }}>{errors.name}</p>}
             <br />
             <br />
 
+            {/* Campus Address */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Address:{" "}
             </label>
@@ -79,12 +71,15 @@ const EditCampusView = (props) => {
               type="text"
               name="address"
               value={campus.address || ""}
-              onChange={(e) => handleChange(e)}
-              required
+              onChange={handleChange}
             />
+            {errors?.address && (
+              <p style={{ color: "red" }}>{errors.address}</p>
+            )}
             <br />
             <br />
 
+            {/* Campus Description */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Description:{" "}
             </label>
@@ -92,11 +87,15 @@ const EditCampusView = (props) => {
               type="text"
               name="description"
               value={campus.description || ""}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
             />
+            {errors?.description && (
+              <p style={{ color: "red" }}>{errors.description}</p>
+            )}
             <br />
             <br />
 
+            {/* Campus Image URL */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
               Campus Image URL:{" "}
             </label>
@@ -104,11 +103,15 @@ const EditCampusView = (props) => {
               type="text"
               name="imageUrl"
               value={campus.imageUrl || ""}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
             />
+            {errors?.imageUrl && (
+              <p style={{ color: "red" }}>{errors.imageUrl}</p>
+            )}
             <br />
             <br />
 
+            {/* Buttons */}
             <Button variant="contained" type="submit">
               Submit
             </Button>

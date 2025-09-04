@@ -24,13 +24,38 @@ class NewCampusContainer extends Component {
       imageUrl: "",
       redirect: false,
       redirectId: null,
+      errors: {},
     };
   }
 
+  validateCampus = (campus) => {
+    const errors = {};
+
+    if (!campus.name || campus.name.trim().length < 2) {
+      errors.name = "Campus name is required (min 2 characters).";
+    }
+
+    if (!campus.address || campus.address.trim().length < 2) {
+      errors.address = "Address is required (min 2 characters).";
+    }
+
+    if (campus.imageUrl) {
+      try {
+        new URL(campus.imageUrl);
+      } catch {
+        errors.imageUrl = "Image URL must be a valid URL.";
+      }
+    }
+
+    return errors;
+  };
+
   // Capture input data when it is entered
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
+    const { name, value } = event.target;
+    this.setState({ [name]: value }, () => {
+      const errors = this.validateCampus(this.state);
+      this.setState({ errors });
     });
   };
 
@@ -44,6 +69,13 @@ class NewCampusContainer extends Component {
       description: this.state.description,
       imageUrl: this.state.imageUrl,
     };
+
+    const errors = this.validateCampus(campus);
+
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors });
+      return;
+    }
 
     // Add new Campus in back-end database
     let newCampus = await this.props.addCampus(campus);
@@ -78,6 +110,11 @@ class NewCampusContainer extends Component {
         <NewCampusView
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          errors={this.state.errors}
+          name={this.state.name}
+          address={this.state.address}
+          description={this.state.description}
+          imageUrl={this.state.imageUrl}
         />
       </div>
     );

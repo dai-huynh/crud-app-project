@@ -25,6 +25,7 @@ class EditCampusContainer extends Component {
       campusId: null,
       redirect: false,
       redirectId: null,
+      errors: {},
     };
   }
 
@@ -47,10 +48,35 @@ class EditCampusContainer extends Component {
     }
   }
 
+  validateCampus = (campus) => {
+    const errors = {};
+    if (!campus.name || campus.name.trim().length < 2) {
+      errors.name = "Campus name is required (min 2 characters).";
+    }
+    if (!campus.address || campus.address.trim().length < 2) {
+      errors.address = "Address is required (min 2 characters).";
+    }
+    if (campus.imageUrl) {
+      try {
+        new URL(campus.imageUrl);
+      } catch {
+        errors.imageUrl = "Image URL must be a valid URL.";
+      }
+    }
+    return errors;
+  };
+
   // Capture input data when it is entered
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
+    const { name, value } = event.target;
+    this.setState({ [name]: value }, () => {
+      const errors = this.validateCampus({
+        name: this.state.name,
+        address: this.state.address,
+        description: this.state.description,
+        imageUrl: this.state.imageUrl,
+      });
+      this.setState({ errors });
     });
   };
 
@@ -66,6 +92,12 @@ class EditCampusContainer extends Component {
       id: this.state.campusId,
     };
 
+    const errors = this.validateCampus(updatedCampus);
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors });
+      return; // stop submission
+    }
+
     // Add new Campus in back-end database
     let editedCampus = await this.props.editCampus(updatedCampus);
 
@@ -78,6 +110,7 @@ class EditCampusContainer extends Component {
       campusId: null,
       redirect: true,
       redirectId: editedCampus.id,
+      errors: {},
     });
   };
 
@@ -101,6 +134,7 @@ class EditCampusContainer extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           campus={this.state}
+          errors={this.state.errors}
         />
       </div>
     );
