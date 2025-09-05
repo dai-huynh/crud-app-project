@@ -15,6 +15,8 @@ const allCampuses = (state = [], action) => {
       return action.payload;
     case at.ADD_CAMPUS:
       return [...state, action.payload];
+    case at.DELETE_CAMPUS:
+      return state.filter((campus) => campus.id !== action.payload); // Reset back to empty campus
     default:
       // If the Reducer doesn't recognize the Action Type, returns the previous (current) State unchanged.
       return state;

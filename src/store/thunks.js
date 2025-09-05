@@ -141,17 +141,13 @@ export const deleteStudentThunk = (studentId) => async (dispatch) => {
 // Edit Student
 // THUNK CREATOR:
 export const editStudentThunk = (student) => async (dispatch) => {
-  // The THUNK
   try {
-    // API "put" call to update student (based on "id" and "student" object's data) from database
-    let updatedStudent = await axios.put(
-      `/api/students/${student.id}`,
-      student
-    );
-    // Update successful so change state with dispatch
-    dispatch(ac.editStudent(updatedStudent));
+    const response = await axios.put(`/api/students/${student.id}`, student);
+    dispatch(ac.editStudent(response.data));
+    return response.data; // ✅ return updated student
   } catch (err) {
     console.error(err);
+    throw err; // optional: rethrow to handle errors in container
   }
 };
 
@@ -182,6 +178,18 @@ export const assignStudentToCampusThunk =
       console.error(err);
     }
   };
+
+export const unassignStudentFromCampusThunk = (student) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/students/${student.id}`, {
+      campusId: null,
+    });
+    dispatch({ type: "UNASSIGN_STUDENT_FROM_CAMPUS", payload: res.data });
+    dispatch(fetchCampusThunk(student.campusId));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // thunks.js
 export const fetchUnassignedStudentsThunk = () => async (dispatch) => {

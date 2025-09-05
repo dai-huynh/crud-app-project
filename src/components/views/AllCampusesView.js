@@ -25,6 +25,12 @@ const AllCampusesView = (props) => {
                 <p>{campus.address}</p>
                 <p>{campus.description}</p>
               </Link>
+              <Button
+                onClick={() => props.deleteCampus(campus.id)}
+                variant="contained"
+              >
+                Delete Campus
+              </Button>
             </div>
           ))}
         </div>

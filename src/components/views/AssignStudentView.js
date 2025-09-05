@@ -14,12 +14,14 @@ const AssignStudentView = (props) => {
     return (
       <div>
         <p>There are no unassigned students.</p>
-        <Link to={`/newstudent`}>
-          <Button variant="contained">Add New Student</Button>
-        </Link>
-        <Link to={`/campus/${campusId}`}>
-          <Button variant="contained">Back to Campus</Button>
-        </Link>
+        <div className="button-group">
+          <Link to={`/newstudent`}>
+            <Button variant="contained">Add New Student</Button>
+          </Link>
+          <Link to={`/campus/${campusId}`}>
+            <Button variant="contained">Back to Campus</Button>
+          </Link>
+        </div>
       </div>
     );
   }

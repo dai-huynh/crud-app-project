@@ -25,13 +25,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const EditCampusView = (props) => {
-  const { handleChange, handleSubmit, campus, errors } = props;
+const EditStudentView = (props) => {
+  const { handleChange, handleSubmit, student, errors } = props;
   const classes = useStyles();
+  console.log("view", student);
 
   return (
     <div>
-      <h1>Editing Campus</h1>
+      <h1>Editing Student</h1>
 
       <div className={classes.root}>
         <div className={classes.formContainer}>
@@ -44,65 +45,98 @@ const EditCampusView = (props) => {
                 color: "#11153e",
               }}
             >
-              {campus.name || "Edit Campus"}
+              {student.firstname
+                ? `${student.firstname} ${student.lastname}`
+                : "Edit Student"}
             </Typography>
           </div>
 
           <form style={{ textAlign: "center" }} onSubmit={handleSubmit}>
-            {/* Campus Name */}
+            {/* First name */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
-              Campus Name:{" "}
+              First name:{" "}
             </label>
             <input
               type="text"
-              name="name"
-              value={campus.name || ""}
+              name="firstname"
+              value={student.firstname || ""}
               onChange={handleChange}
             />
-            {errors?.name && <p style={{ color: "red" }}>{errors.name}</p>}
-            <br />
-            <br />
-
-            {/* Campus Address */}
-            <label style={{ color: "#11153e", fontWeight: "bold" }}>
-              Campus Address:{" "}
-            </label>
-            <input
-              type="text"
-              name="address"
-              value={campus.address || ""}
-              onChange={handleChange}
-            />
-            {errors?.address && (
-              <p style={{ color: "red" }}>{errors.address}</p>
+            {errors?.firstname && (
+              <p style={{ color: "red" }}>{errors.firstname}</p>
             )}
             <br />
             <br />
 
-            {/* Campus Description */}
+            {/* Last name */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
-              Campus Description:{" "}
+              Last name:{" "}
             </label>
             <input
               type="text"
-              name="description"
-              value={campus.description || ""}
+              name="lastname"
+              value={student.lastname || ""}
               onChange={handleChange}
             />
-            {errors?.description && (
-              <p style={{ color: "red" }}>{errors.description}</p>
+            {errors?.lastname && (
+              <p style={{ color: "red" }}>{errors.lastname}</p>
             )}
             <br />
             <br />
 
-            {/* Campus Image URL */}
+            {/* Email */}
             <label style={{ color: "#11153e", fontWeight: "bold" }}>
-              Campus Image URL:{" "}
+              Email:{" "}
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={student.email || ""}
+              onChange={handleChange}
+            />
+            {errors?.email && <p style={{ color: "red" }}>{errors.email}</p>}
+            <br />
+            <br />
+
+            {/* GPA */}
+            <label style={{ color: "#11153e", fontWeight: "bold" }}>
+              GPA:{" "}
+            </label>
+            <input
+              type="number"
+              step="0.1"
+              name="gpa"
+              value={student.gpa || ""}
+              onChange={handleChange}
+            />
+            {errors?.gpa && <p style={{ color: "red" }}>{errors.gpa}</p>}
+            <br />
+            <br />
+
+            {/* Campus ID */}
+            <label style={{ color: "#11153e", fontWeight: "bold" }}>
+              Campus Id:{" "}
+            </label>
+            <input
+              type="text"
+              name="campusId"
+              value={student.campusId || ""}
+              onChange={handleChange}
+            />
+            {errors?.campusId && (
+              <p style={{ color: "red" }}>{errors.campusId}</p>
+            )}
+            <br />
+            <br />
+
+            {/* Student Image URL */}
+            <label style={{ color: "#11153e", fontWeight: "bold" }}>
+              Student Image URL:{" "}
             </label>
             <input
               type="text"
               name="imageUrl"
-              value={campus.imageUrl || ""}
+              value={student.imageUrl || ""}
               onChange={handleChange}
             />
             {errors?.imageUrl && (
@@ -116,7 +150,7 @@ const EditCampusView = (props) => {
               <Button variant="contained" type="submit">
                 Submit
               </Button>
-              <Link to={`/campus/${campus.campusId}`}>
+              <Link to={`/student/${student.id}`}>
                 <Button variant="contained">Cancel</Button>
               </Link>
             </div>
@@ -127,4 +161,4 @@ const EditCampusView = (props) => {
   );
 };
 
-export default EditCampusView;
+export default EditStudentView;

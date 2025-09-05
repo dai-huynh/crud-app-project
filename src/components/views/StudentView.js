@@ -25,6 +25,8 @@ const StudentView = (props) => {
       </div>
 
       <p>Student ID: {student.id}</p>
+      <p>Email: {student.email !== "" ? student.email : "N/A"}</p>
+      <p>GPA: {student.gpa !== "" ? student.gpa : "N/A"}</p>
 
       {!student.campusId ? (
         <h2>This student is not enrolled in any campus</h2>
