@@ -14,3 +14,10 @@ This repository is the client (front-end) code for Final Project - Full-Stack CR
 - Express
 - PostgreSQL
 - Sequelize
+
+### Get Started
+
+```
+npm install
+npm start
+```
